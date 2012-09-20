@@ -204,22 +204,22 @@ string Lexico::siguienteToken(void)
 	SPila = "";
 	}	 
     if(
-    palabra == "main" ||
+    palabra == "principal" ||
     //palabras reservadas
-    palabra == "int" ||
-    palabra == "bool" ||
-    palabra == "char" ||
-    palabra == "printf" ||
-    palabra == "scanf" ||
-    palabra == "if" ||
-    palabra == "else" ||
-    palabra == "for" ||
-    palabra == "while" ||
-    palabra == "do" ||
-    palabra == "while" ||
-    palabra == "do" ||
-    palabra == "return" ||
-    palabra == "void" ||
+    palabra == "entero" ||
+    palabra == "logico" ||
+    palabra == "letra" ||
+    palabra == "escribir" ||
+    palabra == "leer" ||
+    palabra == "si" ||
+    palabra == "sino" ||
+    palabra == "para" ||
+    palabra == "mientras" ||
+    palabra == "hacer" ||
+    palabra == "mientras" ||
+    palabra == "hacer" ||
+    palabra == "devolver" ||
+    palabra == "vacio" ||
     //separadores
     palabra == "{" ||
     palabra == "}" ||
@@ -299,23 +299,21 @@ switch (codigo)
 	exit(-1);
 }
 
-
-//Segund parte
-
+//Segunda parte
 
 void Lexico::programa (void){
 	string token = siguienteToken();
-	if(token == "main"){
+	if(token == "principal"){
 		cout<<"inicio del programa correcto"<<endl;
 		token = siguienteToken();
 		if(token == "{"){
 			cout<<"abre corchete"<<endl;
 			while((token=siguienteToken()) != "}" and token != "FinalD"){
-				if(token == "int"){
-					cout<<"Creacion de un int"<<endl;
+				if(token == "entero"){
+					cout<<"Creacion de un entero"<<endl;
 					enteros();
 					}
-				if(token == "char"){
+				if(token == "letra"){
 					cout<<"Creacion de un char"<<endl;
 					carracteres();
 					}
@@ -323,11 +321,11 @@ void Lexico::programa (void){
 					cout<<"modificaion de una variable"<<endl;
 					variables();
 					}
-				if(token == "printf"){
-					cout<<"Setencia printf"<<endl;
+				if(token == "escribir"){
+					cout<<"Setencia escribir"<<endl;
 					Imprimir();
 					}
-				if(token == "if"){
+				if(token == "si"){
 					cout<<"Sentencia"<<endl;
 					Super_if();
 					}			
@@ -471,7 +469,7 @@ void Lexico::opera_carracter(void){
 	else if( token == "Variable"){
 		token = siguienteToken();
 		if(token == ";"){
-			cout<<"exito al crear char"<<endl;
+			cout<<"exito al crear letra"<<endl;
 			devuelveToken(token);
 			return;}
 		else
@@ -525,7 +523,7 @@ void Lexico::Imprimir(void){
 		if(token  == ")"){
 			token = siguienteToken();
 			if(token == ";"){
-				cout<<"imprecion correcta"<<endl;
+				cout<<"impresion correcta"<<endl;
 				return;
 				}
 			else{
@@ -542,7 +540,7 @@ void Lexico::Imprimir(void){
 	
 	}	
 
-/*	
+
 void Lexico::Super_if(void){
 	string token = siguienteToken();
 	if(token == "("){
@@ -575,30 +573,30 @@ void Lexico::Super_if(void){
 		errores(13);
 		token = siguienteToken();
 		if(token == ")"){
-			cout<<"Sentencia if correcta"<<endl;
+			cout<<"Sentencia si correcta"<<endl;
 			bool Terminar = false;
 			token = siguienteToken();
 				if(token == "{"){
 					Terminar = true;
 					}
 				do{
-					if(token == "int"){
-						cout<<"Creacion de un int"<<endl;
+					if(token == "entero"){
+						cout<<"Creacion de un entero"<<endl;
 						enteros();
 					}
-					if(token == "char"){
-						cout<<"Creacion de un char"<<endl;
+					if(token == "letra"){
+						cout<<"Creacion de una letra"<<endl;
 						carracteres();
 					}
 					if(token == "Variable"){
 						cout<<"modificaion de una variable"<<endl;
 						variables();
 					}
-					if(token == "printf"){
-						cout<<"Setencia printf"<<endl;
+					if(token == "escribir"){
+						cout<<"Setencia escribir"<<endl;
 						Imprimir();
 					}
-					if(token == "if"){
+					if(token == "si"){
 						cout<<"Sentencia"<<endl;
 						Super_if();
 					}			
@@ -607,9 +605,9 @@ void Lexico::Super_if(void){
 				errores(14);
 				}
 			token=siguienteToken();
-			if(token == "else"){
+			if(token == "sino"){
 				token=siguienteToken();
-					if(token == "if"){
+					if(token == "si"){
 					Super_if();
 					return;
 					}
@@ -635,23 +633,23 @@ void Lexico::Super_else(){
 					token = siguienteToken();
 					}
 				do{
-					if(token == "int"){
-						cout<<"Creacion de un int"<<endl;
+					if(token == "entero"){
+						cout<<"Creacion de un entero"<<endl;
 						enteros();
 					}
-					if(token == "char"){
-						cout<<"Creacion de un char"<<endl;
+					if(token == "letra"){
+						cout<<"Creacion de una letra"<<endl;
 						carracteres();
 					}
 					if(token == "Variable"){
 						cout<<"modificaion de una variable"<<endl;
 						variables();
 					}
-					if(token == "printf"){
-						cout<<"Setencia printf"<<endl;
+					if(token == "escribir"){
+						cout<<"Setencia escribir"<<endl;
 						Imprimir();
 					}
-					if(token == "if"){
+					if(token == "si"){
 						cout<<"Sentencia"<<endl;
 						Super_if();
 					}			
@@ -661,7 +659,7 @@ void Lexico::Super_else(){
 				}
 			
 	}
-	*/
+	
 	
 int main()
 {
