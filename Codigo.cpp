@@ -37,6 +37,7 @@ class FrontEnd
           void Leer(void);
           void Super_if(void);
           void Super_else(void);
+          void While(void);
 };
 
 FrontEnd::~FrontEnd()
@@ -212,7 +213,6 @@ string FrontEnd::siguienteToken(void)
     palabra == "principal" ||
     //palabras reservadas
     palabra == "entero" ||
-    palabra == "logico" ||
     palabra == "letra" ||
     palabra == "escribir" ||
     palabra == "leer" ||
@@ -337,6 +337,10 @@ void FrontEnd::programa (void){
 				if(token == "si"){
 					cout<<"Sentencia"<<endl;
 					Super_if();
+					}
+				if(token == "mientras"){
+					cout<<"Sentencia"<<endl;
+					While();
 					}			
 				}
 			if(token == "FinalD"){
@@ -634,9 +638,17 @@ void FrontEnd::Super_if(void){
 						cout<<"Setencia escribir"<<endl;
 						Imprimir();
 					}
+					if(token == "leer"){
+					cout<<"Sentencia"<<endl;
+					Leer();
+					}
 					if(token == "si"){
 						cout<<"Sentencia"<<endl;
 						Super_if();
+					}
+					if(token == "mientras"){
+					cout<<"Sentencia"<<endl;
+					While();
 					}			
 					}while(Terminar & ((token=siguienteToken()) != "}" and token != "FinalD"));	
 			if(token == "FinalD"){
@@ -687,15 +699,99 @@ void FrontEnd::Super_else(){
 						cout<<"Setencia escribir"<<endl;
 						Imprimir();
 					}
+					if(token == "leer"){
+					cout<<"Sentencia"<<endl;
+					Leer();
+					}
 					if(token == "si"){
 						cout<<"Sentencia"<<endl;
 						Super_if();
+					}
+					if(token == "mientras"){
+					cout<<"Sentencia"<<endl;
+					While();
 					}			
 					}while(Terminar && ((token=siguienteToken()) != "}" and token != "FinalD"));	
 			if(token == "FinalD"){
 				errores(14);
-				}
+				}			
+	}
+
+void FrontEnd::While(void){
+	string token = siguienteToken();
+	if(token == "("){
+		token = siguienteToken();
+		if(token == "Variable" or token == "Numero" or token == "("){
+		devuelveToken(token);
+		mas_opera_numerica();
+		}
+		else if(token == "\'"){
+		devuelveToken(token);	
+		opera_carracter();	
+		}
+		else
+		errores(13);	
+		token = siguienteToken();
+		if( token == "==" || token == "!=" || token == "<" || token == "<=" || token == ">" || token == ">=" ){
+			token = siguienteToken();
+			if(token == "Variable" or token == "Numero" or token == "("){
+			devuelveToken(token);
+			mas_opera_numerica();
+			}
+			else if(token == "\'"){
+			devuelveToken(token);	
+			opera_carracter();	
+			}
+			else
+			errores(13);	
+			}
+		else
+		errores(13);
+		token = siguienteToken();
+		if(token == ")"){
+			cout<<"Sentencia mientras correcta"<<endl;
+			bool Terminar = false;
+			token = siguienteToken();
+				if(token == "{"){
+					Terminar = true;
+					}
+				do{
+					if(token == "entero"){
+						cout<<"Creacion de un entero"<<endl;
+						enteros();
+					}
+					if(token == "letra"){
+						cout<<"Creacion de una letra"<<endl;
+						carracteres();
+					}
+					if(token == "Variable"){
+						cout<<"modificaion de una variable"<<endl;
+						variables();
+					}
+					if(token == "escribir"){
+						cout<<"Setencia escribir"<<endl;
+						Imprimir();
+					}
+					if(token == "leer"){
+					cout<<"Sentencia"<<endl;
+					Leer();
+					}
+					if(token == "si"){
+						cout<<"Sentencia"<<endl;
+						Super_if();
+					}			
+					}while(Terminar & ((token=siguienteToken()) != "}" and token != "FinalD"));	
+			if(token == "FinalD"){
+				errores(14);
+				}					
+			return;
+			}
+		else
+		errores(5);	
 			
+		}
+	else
+	errores(11);
 	}
 	
 	
