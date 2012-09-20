@@ -554,11 +554,7 @@ void FrontEnd::Leer(void){
 	if(token == "("){
 		token = siguienteToken();
 		if(token == "Variable"){
-		devuelveToken(token);
-		}
-		else
-		errores(13);	
-		token = siguienteToken();
+			token = siguienteToken();
 		if(token  == ")"){
 			token = siguienteToken();
 			if(token == ";"){
@@ -568,7 +564,13 @@ void FrontEnd::Leer(void){
 			else{
 				errores(3);
 				}
+			}
+			else{
+				errores(11);
 			}	
+		}
+		else
+		errores(13);		
 		}
 	else{
 		errores(11);
