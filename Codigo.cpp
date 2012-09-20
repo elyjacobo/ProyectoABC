@@ -14,7 +14,8 @@ class FrontEnd
     int traza;
     string SPila;
     
-    public:
+    public:    
+    
           FrontEnd(const char *unNombreFichero, int una_traza=0);
           ~FrontEnd();
           // primera parte lexico
@@ -33,6 +34,7 @@ class FrontEnd
           void opera_carracter(void); 
           void variables(void);
           void Imprimir(void);
+          void Leer(void);
           void Super_if(void);
           void Super_else(void);
 };
@@ -56,6 +58,9 @@ FrontEnd::FrontEnd(const char *unNombreFichero, int una_traza)
      else traza = 0;
      n1=1;
      SPila = "";
+     if(existeTraza())
+         cout<<"INICIO DE ANALISIS LEXICO"<<endl;
+     programa();
 }
 
 string FrontEnd::siguienteToken(void)
@@ -325,6 +330,10 @@ void FrontEnd::programa (void){
 					cout<<"Setencia escribir"<<endl;
 					Imprimir();
 					}
+				if(token == "leer"){
+					cout<<"Sentencia"<<endl;
+					Leer();
+					}
 				if(token == "si"){
 					cout<<"Sentencia"<<endl;
 					Super_if();
@@ -538,6 +547,33 @@ void FrontEnd::Imprimir(void){
 		errores(11);
 		}	
 	
+	}
+	
+void FrontEnd::Leer(void){
+	string token = siguienteToken();
+	if(token == "("){
+		token = siguienteToken();
+		if(token == "Variable"){
+		devuelveToken(token);
+		}
+		else
+		errores(13);	
+		token = siguienteToken();
+		if(token  == ")"){
+			token = siguienteToken();
+			if(token == ";"){
+				cout<<"lectura correcta"<<endl;
+				return;
+				}
+			else{
+				errores(3);
+				}
+			}	
+		}
+	else{
+		errores(11);
+		}	
+	
 	}	
 
 
@@ -663,12 +699,7 @@ void FrontEnd::Super_else(){
 	
 int main()
 {
-  string token;
-  FrontEnd pollo("lila.txt",1);
- if(pollo.existeTraza())
-         cout<<"INICIO DE ANALISIS LEXICO"<<endl;
-   pollo.programa();    
-   cout<<"Exito en la compilacion"<<endl;
-  
-  return 0;
+   FrontEnd pollo("lila.txt",1);
+   cout<<"Exito en la compilacion"<<endl;  
+   return 0;
 }
