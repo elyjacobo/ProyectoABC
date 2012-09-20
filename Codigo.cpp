@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class Lexico
+class FrontEnd
 {
 	char *nombreFichero;
     FILE* entrada;
@@ -15,16 +15,16 @@ class Lexico
     string SPila;
     
     public:
-          Lexico(const char *unNombreFichero, int una_traza=0);
-          ~Lexico();
-          // primera parte
+          FrontEnd(const char *unNombreFichero, int una_traza=0);
+          ~FrontEnd();
+          // primera parte lexico
           string siguienteToken(void);
           void  devuelveToken(string token);
           int lineaActual(void){return n1; }
           int existeTraza(void){if(traza)return 1; else return 0;}
           void errores(int codigo);
           
-          // Segunda arte
+          // Segunda parte sintaxis
           void programa (void);
           void enteros(void);
           void opera_numerica(void);
@@ -37,12 +37,12 @@ class Lexico
           void Super_else(void);
 };
 
-Lexico::~Lexico()
+FrontEnd::~FrontEnd()
 {
      fclose(entrada);
 }
 
-Lexico::Lexico(const char *unNombreFichero, int una_traza)
+FrontEnd::FrontEnd(const char *unNombreFichero, int una_traza)
 {
      entrada=fopen(unNombreFichero, "rt");
      if((entrada==NULL))
@@ -58,7 +58,7 @@ Lexico::Lexico(const char *unNombreFichero, int una_traza)
      SPila = "";
 }
 
-string Lexico::siguienteToken(void)
+string FrontEnd::siguienteToken(void)
 {
 	 char car;
      string palabra = "";
@@ -273,12 +273,12 @@ string Lexico::siguienteToken(void)
 	return palabra;
 }
 
-void Lexico::devuelveToken(string token){
+void FrontEnd::devuelveToken(string token){
 	SPila = token;
 	cout<<"Mete a la pila: "<<SPila<<endl;
 	}
 
-void Lexico::errores(int codigo){
+void FrontEnd::errores(int codigo){
 cout<<"LINEA "<<lineaActual();
 cout<<" ERROR SINTACTICO "<<codigo;
 switch (codigo)
@@ -301,7 +301,7 @@ switch (codigo)
 
 //Segunda parte
 
-void Lexico::programa (void){
+void FrontEnd::programa (void){
 	string token = siguienteToken();
 	if(token == "principal"){
 		cout<<"inicio del programa correcto"<<endl;
@@ -345,7 +345,7 @@ void Lexico::programa (void){
 		errores(1);
 	}
 
-void Lexico::enteros(void){
+void FrontEnd::enteros(void){
 	string token = siguienteToken();
 	if(token == "Variable"){
 		string token = siguienteToken();
@@ -370,7 +370,7 @@ void Lexico::enteros(void){
 	errores(4);
 	}
 
-void Lexico::opera_numerica(void){
+void FrontEnd::opera_numerica(void){
 	string token = siguienteToken();
 	
 	if( token == "("){
@@ -397,7 +397,7 @@ void Lexico::opera_numerica(void){
 	
 	}
 
-void Lexico::mas_opera_numerica(void){
+void FrontEnd::mas_opera_numerica(void){
 	string token = siguienteToken();
 	if( token == "("){
 		mas_opera_numerica();
@@ -425,7 +425,7 @@ void Lexico::mas_opera_numerica(void){
 	errores(6);
 	}
 	
-void Lexico::carracteres(void){
+void FrontEnd::carracteres(void){
 	string token = siguienteToken();
 	if(token == "Variable"){
 		string token = siguienteToken();
@@ -449,7 +449,7 @@ void Lexico::carracteres(void){
 	errores(4);
 	
 	}
-void Lexico::opera_carracter(void){
+void FrontEnd::opera_carracter(void){
 	string token = siguienteToken();
 	bool op = true;
 	if(token == "\'"){
@@ -479,7 +479,7 @@ void Lexico::opera_carracter(void){
 	errores(7);
 	} 		
 	
-void Lexico::variables(void){
+void FrontEnd::variables(void){
 	string token = siguienteToken();
 	cout<<"Analizando la asignacion"<<endl;
 	if( token == "="){
@@ -505,7 +505,7 @@ void Lexico::variables(void){
 	
 	}
 
-void Lexico::Imprimir(void){
+void FrontEnd::Imprimir(void){
 	string token = siguienteToken();
 	if(token == "("){
 		token = siguienteToken();
@@ -541,7 +541,7 @@ void Lexico::Imprimir(void){
 	}	
 
 
-void Lexico::Super_if(void){
+void FrontEnd::Super_if(void){
 	string token = siguienteToken();
 	if(token == "("){
 		token = siguienteToken();
@@ -624,7 +624,7 @@ void Lexico::Super_if(void){
 	errores(11);
 	}
 
-void Lexico::Super_else(){
+void FrontEnd::Super_else(){
 	bool Terminar = false;
 	string token = siguienteToken();
 				if(token == "{"){
@@ -664,7 +664,7 @@ void Lexico::Super_else(){
 int main()
 {
   string token;
-  Lexico pollo("lila.txt",1);
+  FrontEnd pollo("lila.txt",1);
  if(pollo.existeTraza())
          cout<<"INICIO DE ANALISIS LEXICO"<<endl;
    pollo.programa();    
