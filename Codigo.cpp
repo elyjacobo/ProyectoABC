@@ -2,7 +2,8 @@
 #include<stdio.h>
 #include<ctype.h>
 #include<stdlib.h>
-#include<string.h> 
+#include<string.h>
+#include "SYMTAB.h"
 
 using namespace std;
 
@@ -341,11 +342,11 @@ void FrontEnd::programa (void){
 				if(token == "mientras"){
 					cout<<"Sentencia"<<endl;
 					While();
-					}			
-				}
-			if(token == "FinalD"){
+					}
+				if(token == "FinalD"){
 				errores(14);
-				}
+				}	
+				}			
 			token=siguienteToken();
 			if(token != "FinalD"){
 				errores(13);
@@ -649,11 +650,12 @@ void FrontEnd::Super_if(void){
 					if(token == "mientras"){
 					cout<<"Sentencia"<<endl;
 					While();
+					}
+					if(token == "FinalD"){
+					errores(14);
 					}			
 					}while(Terminar & ((token=siguienteToken()) != "}" and token != "FinalD"));	
-			if(token == "FinalD"){
-				errores(14);
-				}
+			
 			token=siguienteToken();
 			if(token == "sino"){
 				token=siguienteToken();
@@ -779,11 +781,13 @@ void FrontEnd::While(void){
 					if(token == "si"){
 						cout<<"Sentencia"<<endl;
 						Super_if();
-					}			
+					}
+					if(token == "FinalD"){
+						errores(
+						);
+					}		
 					}while(Terminar & ((token=siguienteToken()) != "}" and token != "FinalD"));	
-			if(token == "FinalD"){
-				errores(14);
-				}					
+								
 			return;
 			}
 		else
